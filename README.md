@@ -60,4 +60,140 @@ Your work will be automatically submitted when you push to your GitHub Classroom
 
 - [Express.js Documentation](https://expressjs.com/)
 - [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+
+## 🚀 How to Run the Server
+
+1. **Clone the repository:**
+   ```
+   git clone <your-repo-url>
+   cd <your-repo-folder>
+   ```
+
+2. **Install dependencies:**
+   ```
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   - Copy `.env.example` to `.env` and fill in the required values (e.g., `MONGODB_URI`, `PORT`, `API_KEY`, `JWT_SECRET`).
+
+4. **Start the server:**
+   ```
+   npm start
+   ```
+   or for development with auto-reload:
+   ```
+   npm run dev
+   ```
+
+5. **Server will run at:**  
+   `http://localhost:3000` (unless you set a different port)
+
+---
+
+## 📚 API Endpoints Documentation
+
+| Method | Endpoint                | Description                        |
+|--------|-------------------------|------------------------------------|
+| GET    | `/product`              | List all products                  |
+| GET    | `/product/:id`          | Get a product by MongoDB `_id`     |
+| GET    | `/product/uuid/:uuid`   | Get a product by UUID              |
+| POST   | `/product`              | Create a new product               |
+| POST   | `/product/bulk`         | Bulk create products (array input) |
+| PUT    | `/product/:id`          | Update a product by `_id`          |
+| DELETE | `/product/:id`          | Delete a product by `_id`          |
+| GET    | `/product/stats`        | Get product statistics by category |
+
+---
+
+## 📝 Example Requests & Responses
+
+### Create a Product
+
+**POST** `/product`
+```json
+{
+  "name": "Wireless Mouse",
+  "description": "A smooth and responsive wireless mouse.",
+  "price": 19.99,
+  "category": "Electronics",
+  "inStock": true
+}
+```
+**Response:**
+```json
+{
+  "message": "Product created successfully",
+  "product": {
+    "_id": "60f8c2b8e1b1a2b3c4d5e6f7",
+    "uuid": "7f90bfa6-2b83-49d4-bc83-3af0202edfec",
+    "name": "Wireless Mouse",
+    "description": "A smooth and responsive wireless mouse.",
+    "price": 19.99,
+    "category": "Electronics",
+    "inStock": true,
+    "__v": 0
+  }
+}
+```
+
+---
+
+### Get All Products
+
+**GET** `/product`
+
+**Response:**
+```json
+{
+  "message": "Products fetched successfully",
+  "products": [
+    {
+      "_id": "...",
+      "uuid": "...",
+      "name": "...",
+      "description": "...",
+      "price": ...,
+      "category": "...",
+      "inStock": ...
+    },
+    ...
+  ]
+}
+```
+
+---
+
+### Get Product Statistics
+
+**GET** `/product/stats`
+
+**Response:**
+```json
+{
+  "stats": [
+    { "_id": "Electronics", "count": 3 },
+    { "_id": "Home", "count": 2 }
+  ]
+}
+```
+
+---
+
+### Error Example
+
+**GET** `/product/invalidid`
+
+**Response:**
+```json
+{
+  "error": "Product fetching failed!",
+  "details": "Cast to ObjectId failed for value \"invalidid\" at path \"_id\" for model \"Product\""
+}
+```
+
+---
+
+> For more endpoints and details, see the code comments or test with Postman!
